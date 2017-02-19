@@ -39,4 +39,28 @@ public class EndpointsControllerTest {
 
     }
 
+    @Test
+    public void individualParamRequest() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/individual?foo=bar");
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("Param value: bar"));
+    }
+
+    @Test
+    public void mapParamRequest() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/map?foo=bar&bar=baz");
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("{foo=bar, bar=baz}"));
+    }
+
+    @Test
+    public void customParamRequest() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/custom?name=John&age=30");
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("Name is John. Age is 30"));
+    }
+
 }
