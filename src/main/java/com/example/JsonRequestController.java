@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by kennethkorcal on 2/22/17.
  */
@@ -18,31 +20,28 @@ class SearchRequestParams {
     public void setFrom(String from) { this.from = from; }
 }
 
-class Article {
-    private String title;
-    private String createdBy;
+class Json {
+    private Data data;
 
-    public String getTitle() { return title; }
+    public Data getData() { return data; }
+    public void setData(Data data) { this.data = data; }
 
-    public void setTitle(String title) { this.title = title; }
+    static class Data {
+        private List<Person> people;
 
-    @JsonProperty("created_by")
-    public String getCreatedBy() { return createdBy; }
+        public List<Person> getPeople() { return people; }
+        public void setPeople(List<Person> people) { this.people = people; }
+    }
 
-    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
-}
+    static class Person {
+        private int id;
+        private String name;
 
-class Blog {
-    private String title;
-    Article[] articles;
-
-    public String getTitle() { return title; }
-
-    public void setTitle(String title) { this.title = title; }
-
-    public Article[] getArticles() { return articles; }
-
-    public void setArticles(Article[] articles) { this.articles = articles; }
+        public int getId() { return id; }
+        public void setId(int id) { this.id = id; }
+        public String getName() { return name; }
+        public void setName(String name) { this.name = name; }
+    }
 }
 
 @RestController
@@ -58,7 +57,7 @@ public class JsonRequestController {
     }
 
     @PostMapping("/file")
-    public String getJsonNested(@RequestBody Blog blog) {
-        return blog.articles[0].getTitle();
+    public String getJsonNested(@RequestBody Json json) {
+        return json.getData().getPeople().get(0).getName();
     }
 }
