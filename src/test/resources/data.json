@@ -1,0 +1,13 @@
+{
+  "title": "Blog Title",
+  "articles": [
+    {
+      "title": "Article 1",
+      "created_by": "Someone"
+    },
+    {
+      "title": "Article 2",
+      "created_by": "Someone Else"
+    }
+  ]
+}
